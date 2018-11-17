@@ -37,7 +37,7 @@ class CanvasView: NSView {
             path.lineWidth = 2
 
             let pattern: [CGFloat] = [5, 2]
-            path.setLineDash(pattern, count: 4, phase: 0)
+            path.setLineDash(pattern, count: 2, phase: 0)
 
             NSColor.white.setStroke()
             path.stroke()
