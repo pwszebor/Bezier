@@ -10,6 +10,10 @@
 		40C791DC21A0428000433A8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C791DB21A0428000433A8C /* AppDelegate.swift */; };
 		40C791DE21A0428100433A8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40C791DD21A0428100433A8C /* Assets.xcassets */; };
 		40C791E121A0428100433A8C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40C791DF21A0428100433A8C /* MainMenu.xib */; };
+		40C791EA21A0474500433A8C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C791E921A0474500433A8C /* MainViewController.swift */; };
+		40C791EC21A04A4800433A8C /* PointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C791EB21A04A4800433A8C /* PointView.swift */; };
+		40C791EE21A04CFB00433A8C /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C791ED21A04CFB00433A8C /* CanvasView.swift */; };
+		40C791F221A07BC300433A8C /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C791F121A07BC300433A8C /* Bezier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		40C791E021A0428100433A8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		40C791E221A0428100433A8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40C791E321A0428100433A8C /* Bezier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bezier.entitlements; sourceTree = "<group>"; };
+		40C791E921A0474500433A8C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		40C791EB21A04A4800433A8C /* PointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointView.swift; sourceTree = "<group>"; };
+		40C791ED21A04CFB00433A8C /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		40C791F121A07BC300433A8C /* Bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bezier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +60,10 @@
 			isa = PBXGroup;
 			children = (
 				40C791DB21A0428000433A8C /* AppDelegate.swift */,
+				40C791E921A0474500433A8C /* MainViewController.swift */,
+				40C791EB21A04A4800433A8C /* PointView.swift */,
+				40C791ED21A04CFB00433A8C /* CanvasView.swift */,
+				40C791F121A07BC300433A8C /* Bezier.swift */,
 				40C791DD21A0428100433A8C /* Assets.xcassets */,
 				40C791DF21A0428100433A8C /* MainMenu.xib */,
 				40C791E221A0428100433A8C /* Info.plist */,
@@ -130,7 +142,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40C791F221A07BC300433A8C /* Bezier.swift in Sources */,
+				40C791EC21A04A4800433A8C /* PointView.swift in Sources */,
 				40C791DC21A0428000433A8C /* AppDelegate.swift in Sources */,
+				40C791EE21A04CFB00433A8C /* CanvasView.swift in Sources */,
+				40C791EA21A0474500433A8C /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
