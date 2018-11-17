@@ -9,7 +9,7 @@
 import AppKit
 
 class CanvasView: NSView {
-    private var dashedLines = [(CGPoint, CGPoint)]()
+    private var dashedLines = [(CGPoint, CGPoint, NSColor)]()
     private var points = [(CGPoint, CGSize, NSColor)]()
     private var bezierPath: ([CGPoint], NSColor)?
 
@@ -28,7 +28,7 @@ class CanvasView: NSView {
         super.draw(dirtyRect)
 
         for line in dashedLines {
-            let (p1, p2) = line
+            let (p1, p2, color) = line
 
             let path = NSBezierPath()
             path.move(to: p1)
@@ -39,7 +39,17 @@ class CanvasView: NSView {
             let pattern: [CGFloat] = [5, 2]
             path.setLineDash(pattern, count: 2, phase: 0)
 
-            NSColor.white.setStroke()
+            color.setStroke()
+            path.stroke()
+        }
+
+        if let bezierPath = bezierPath {
+            let path = NSBezierPath()
+            path.lineWidth = 3
+            var points = bezierPath.0
+            path.move(to: points[0])
+            path.appendPoints(&points, count: points.count)
+            bezierPath.1.setStroke()
             path.stroke()
         }
 
@@ -49,20 +59,10 @@ class CanvasView: NSView {
             color.setFill()
             path.fill()
         }
-
-        if let bezierPath = bezierPath {
-            let path = NSBezierPath()
-            path.lineWidth = 2
-            var points = bezierPath.0
-            path.move(to: points[0])
-            path.appendPoints(&points, count: points.count)
-            bezierPath.1.setStroke()
-            path.stroke()
-        }
     }
 
-    func drawLine(_ p1: CGPoint, _ p2: CGPoint, pointSize: CGSize, pointColor: NSColor) {
-        dashedLines.append((p1, p2))
+    func drawLine(_ p1: CGPoint, _ p2: CGPoint, lineColor: NSColor, pointSize: CGSize, pointColor: NSColor) {
+        dashedLines.append((p1, p2, lineColor))
         points.append((p1, pointSize, pointColor))
         points.append((p2, pointSize, pointColor))
         setNeedsDisplay(frame)

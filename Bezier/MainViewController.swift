@@ -9,7 +9,8 @@
 import AppKit
 
 fileprivate let POINT_SIZE = CGSize(width: 20, height: 20)
-fileprivate let HALF_POINT_SIZE = POINT_SIZE.applying(.init(scaleX: 0.5, y: 0.5))
+fileprivate let CONTROL_POINT_SIZE = POINT_SIZE.applying(.init(scaleX: 0.75, y: 0.75))
+fileprivate let SEGMENT_POINT_SIZE = POINT_SIZE.applying(.init(scaleX: 0.5, y: 0.5))
 
 class MainViewController: NSViewController {
     private lazy var slider = NSSlider(value: 0, minValue: 0, maxValue: 1, target: self, action: #selector(sliderValueChanged))
@@ -29,6 +30,12 @@ class MainViewController: NSViewController {
 
     private weak var draggedPoint: PointView?
     private var draggedPointOrigin = CGPoint.zero
+
+    private var colors = Colors() {
+        didSet {
+            updateView()
+        }
+    }
 
     private var t: CGFloat = 0 {
         didSet {
@@ -129,20 +136,24 @@ class MainViewController: NSViewController {
         guard let startPoint = startPoint, let endPoint = endPoint, !points.isEmpty else { return }
         canvas.reset()
 
+        startPoint.color = colors.startPoint
+        endPoint.color = colors.endPoint
+        points.forEach { $0.color = colors.controlPoint }
+
         let controlPoints = [[startPoint], points, [endPoint]].flatMap { $0 }.map { $0.frame.center }
 
         let bezierPath = Bezier.bezierSegmentsAndPoint(withControlPoints: controlPoints, t: t)
 
-        canvas.drawPoint(bezierPath.bezierPoint, size: POINT_SIZE, color: .green)
+        canvas.drawPoint(bezierPath.bezierPoint, size: POINT_SIZE, color: colors.bezierPoint)
 
         if drawLineSegments {
             bezierPath.segments.forEach {
-                canvas.drawLine($0.0, $0.1, pointSize: HALF_POINT_SIZE, pointColor: .magenta)
+                canvas.drawLine($0.0, $0.1, lineColor: colors.segmentLine, pointSize: SEGMENT_POINT_SIZE, pointColor: colors.segmentPoint)
             }
         }
 
         if drawBezierPath {
-            canvas.drawPath(points: Bezier.bezierPathPoints(withControlPoints: controlPoints, from: 0, to: t), color: .yellow)
+            canvas.drawPath(points: Bezier.bezierPathPoints(withControlPoints: controlPoints, from: 0, to: t), color: colors.bezierLine)
         }
     }
 }
@@ -158,18 +169,22 @@ extension MainViewController { // creating points
             return
         }
         let point: PointView
+        let size: CGSize
         if startPoint == nil {
-            point = PointView(color: .red)
+            point = PointView(color: colors.startPoint)
+            size = POINT_SIZE
             startPoint = point
         } else if endPoint == nil {
-            point = PointView(color: .blue)
+            point = PointView(color: colors.endPoint)
+            size = POINT_SIZE
             endPoint = point
         } else {
-            point = PointView(color: .orange)
+            point = PointView(color: colors.controlPoint)
+            size = CONTROL_POINT_SIZE
             points.append(point)
         }
         canvas.addSubview(point)
-        point.frame = CGRect(origin: pressGestureRecognizer.location(in: canvas).applying(.init(translationX: -POINT_SIZE.width / 2, y: -POINT_SIZE.height / 2)), size: POINT_SIZE)
+        point.frame = CGRect(origin: pressGestureRecognizer.location(in: canvas).applying(.init(translationX: -size.width / 2, y: -size.height / 2)), size: size)
 
         updateView()
     }
